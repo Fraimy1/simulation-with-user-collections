@@ -6,7 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "casino-lab4"
 version = "0.1.0"
 requires-python = ">=3.10"
-dependencies = ["pydantic>=2"]
+dependencies = [
+    "loguru>=0.7.3",
+    "pydantic>=2",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
