@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Iterator
 from loguru import logger
 from casino_lab4.utils.logging import log_and_raise
-from casino_lab4.core.errors import OutOfRangeError, WrongTypeError, StepZeroError
+from casino_lab4.core.errors import NotFoundError, OutOfRangeError, WrongTypeError, StepZeroError
 from casino_lab4.domain.goose import Goose
 class GooseCollection:
     def __init__(self, data: list[Goose] | None = None) -> None:
@@ -52,6 +52,17 @@ class GooseCollection:
             log_and_raise(OutOfRangeError(f"Goose at index {i} not found"))
         
         logger.info(f"Goose number {i} deleted")
+
+    def remove(self, goose: Goose) -> None:
+        if not isinstance(goose, Goose):
+            log_and_raise(WrongTypeError("Goose must be a Goose object"))
+        
+        for i, g in enumerate(self._data):
+            if g.name == goose.name:
+                del self[i]
+                return
+        log_and_raise(NotFoundError(f"Goose {goose.name} not found"))
+        logger.info(f"Goose {goose.name} deleted")
 
     def append(self, goose: Goose) -> None:
         if not isinstance(goose, Goose):

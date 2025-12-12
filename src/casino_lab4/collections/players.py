@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Iterator
 from loguru import logger
 from casino_lab4.utils.logging import log_and_raise
-from casino_lab4.core.errors import OutOfRangeError, WrongTypeError, StepZeroError
+from casino_lab4.core.errors import NotFoundError, OutOfRangeError, WrongTypeError, StepZeroError
 from casino_lab4.domain.player import Player
 
 class PlayerCollection:
@@ -54,6 +54,17 @@ class PlayerCollection:
         
         logger.info(f"Player number {i} deleted")
 
+    def remove(self, player: Player) -> None:
+        if not isinstance(player, Player):
+            log_and_raise(WrongTypeError("Player must be a Player object"))
+        
+        for i, p in enumerate(self._data):
+            if p.name == player.name:
+                del self[i]
+                return
+        log_and_raise(NotFoundError(f"Player {player.name} not found"))
+        logger.info(f"Player {player.name} deleted")
+    
     def append(self, player: Player) -> None:
         if not isinstance(player, Player):
             log_and_raise(WrongTypeError("Player must be a Player object"))

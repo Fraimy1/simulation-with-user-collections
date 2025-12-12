@@ -60,6 +60,16 @@ def test_delete(players):
     del players[0]
     assert len(players) == 2
 
+def test_remove(players):
+    players.remove(Player("John", 100))
+    assert len(players) == 2
+
+def test_errors_remove(players):
+    with pytest.raises(WrongTypeError):
+        players.remove("John")
+    with pytest.raises(NotFoundError):
+        players.remove(Player("Honker", 200))
+
 def test_errors_delete(players):
     with pytest.raises(WrongTypeError):
         del players["1"]

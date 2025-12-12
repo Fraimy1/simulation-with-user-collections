@@ -77,5 +77,16 @@ def test_append(geese):
     assert geese[3].name == "Honker"
     assert geese[3].honk_volume == 200
 
+def test_remove(geese):
+    geese.remove(Goose("Gus", 100))
+    assert len(geese) == 2
+
+def test_errors_remove(geese):
+    with pytest.raises(WrongTypeError):
+        geese.remove("Gus")
+
+    with pytest.raises(NotFoundError):
+        geese.remove(Goose("azazaza", 200))
+
 def test_repr(geese):
     assert geese.__repr__() == "GooseCollection([Goose(name=Gus, honk_volume=100), Goose(name=Lily, honk_volume=200), Goose(name=Daisy, honk_volume=300)])"
