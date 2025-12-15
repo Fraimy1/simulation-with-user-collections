@@ -2,6 +2,8 @@ from __future__ import annotations
 from casino_lab4.domain.player import Player
 from loguru import logger
 from typing import Self
+import random as rnd
+from casino_lab4.utils.misc import ensure_within_100
 
 class Goose:
     def __init__(self, name: str, honk_volume: float) -> None:
@@ -47,11 +49,14 @@ class WarGoose(Goose):
 
     def __repr__(self) -> str:
         return f"WarGoose(name={self.name}, honk_volume={self.honk_volume}, damage={self.damage})"
+    
+    def attack(self) -> float:
+        return self.damage * rnd.uniform(0.5, 1.5)
 
 class HonkGoose(Goose):
     def scream(self) -> float:
         logger.info(f"HonkGoose {self.name} screamed with volume {self.honk_volume}")
-        return self.honk_volume
+        return ensure_within_100(self.honk_volume * rnd.uniform(0.5, 1.5))
 
     def __repr__(self) -> str:
         return f"HonkGoose(name={self.name}, honk_volume={self.honk_volume})"
