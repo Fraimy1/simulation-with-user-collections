@@ -13,6 +13,7 @@ class Casino:
         self.geese = GooseCollection()
         self.balances = CasinoBalance()
         self.bankroll: float = bankroll
+        self.is_bankrupt: bool = False
     
     def register_player(self, player:Player):
         self.players.append(player)
