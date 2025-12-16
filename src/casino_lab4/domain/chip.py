@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 class Chip:
-    def __init__(self, value: int) -> None:
-        self.value = value
+    def __init__(self, value: int, color: str, number: int) -> None:
+        self.color: str = color
+        self.value: int = value
+        self.number: int = number
 
     def __add__(self, other: Chip | int) -> Chip:
         if isinstance(other, Chip):

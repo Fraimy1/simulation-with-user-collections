@@ -1,9 +1,9 @@
-from casino_lab4.collections.balances import CasinoBalance
+from casino_lab4.collections.balances import Balance
 import pytest
 from casino_lab4.core.errors import NotFoundError
 
-def test_casino_balance():
-    balance = CasinoBalance()
+def test_balance():
+    balance = Balance(user_naming="Player")
     balance['John'] = 100
     assert balance['John'] == 100
 
