@@ -14,7 +14,7 @@ class Balance:
     def __setitem__(self, name: str, balance: float) -> None:
         old = self._balances.get(name)
         self._balances[name] = balance
-        logger.info(f"{self.label} balance changed: {old if old is not None else 'None'} -> {balance}")
+        logger.debug(f"{self.label} balance changed: {old if old is not None else 'None'} -> {balance}")
 
     def __getitem__(self, name: str) -> float:
         balance = self._balances.get(name)
