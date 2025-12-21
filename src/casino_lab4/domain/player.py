@@ -1,6 +1,6 @@
 from __future__ import annotations
 class Player:
-    def __init__(self, name:str, balance:float, sanity: int) -> None:
+    def __init__(self, name:str, balance:float, sanity: int = 100) -> None:
         self.name: str = name
         self.balance: float = balance
         self.sanity: int = sanity

@@ -151,10 +151,10 @@ def event_wargoose_attack(casino: Casino) -> None:
         if v.balance <= 0:
             continue
 
-        stolen = 0.0
-
-        stolen = float(goose.attack(v))  
-
+        damage = float(goose.attack())
+        stolen = min(v.balance, damage)
+        
+        v.balance -= stolen
         stolen = max(0.0, float(stolen))
         total += stolen
         casino.bankroll += stolen #TODO for now goes to casino, should go to geese
