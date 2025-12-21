@@ -11,6 +11,6 @@ def select_players(casino: Casino, min_balance: float = 0) -> PlayerCollection:
         return PlayerCollection([])
 
     n_players = len(players)
-    n_select = rnd.randint(1, int(n_players/2)) #TODO: Make this a setting
+    n_select = rnd.randint(1, int(n_players/2))
     picked = rnd.sample(players, n_select)
     return PlayerCollection(picked)

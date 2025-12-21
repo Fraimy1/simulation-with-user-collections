@@ -23,8 +23,8 @@ class Casino:
 
     def register_goose(self, goose:Goose):
         self.geese.append(goose)
-        self.geese_balances[goose.name] = goose.honk_volume
-        logger.info(f"Goose {goose.name} registered")
+        self.geese_balances[goose.name] = goose.balance
+        logger.info(f"Goose {goose.name} registered with balance {goose.balance}")
 
     def unregister_player(self, player:Player):
         self.players.remove(player)

@@ -21,7 +21,7 @@ class PlayerCollection:
         except IndexError:
             log_and_raise(OutOfRangeError(f"Player at index {i} not found"))
 
-        logger.info(f"Player number {i} changed: {player}")
+        logger.debug(f"Player number {i} changed: {player}")
 
     def __getitem__(self, i: int|slice) -> Player|PlayerCollection:
         if not isinstance(i, (int,slice)):

@@ -20,7 +20,7 @@ class GooseCollection:
         except IndexError:
             log_and_raise(OutOfRangeError(f"Goose at index {i} not found"))
 
-        logger.info(f"Goose number {i} changed: {goose}")
+        logger.debug(f"Goose number {i} changed: {goose}")
 
     def __getitem__(self, i: int|slice) -> Goose|GooseCollection:
         if not isinstance(i, (int,slice)):
