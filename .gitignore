@@ -2,6 +2,23 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+
+# Virtual env
+.venv/
+
+# Test / tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+
 # User-specific stuff
 .idea/
 .idea/**/workspace.xml
