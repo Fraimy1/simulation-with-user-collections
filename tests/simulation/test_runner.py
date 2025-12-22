@@ -2,6 +2,7 @@ from casino_lab4.simulation.runner import run_simulation, _is_simulation_over
 from casino_lab4.simulation.casino import Casino
 from casino_lab4.domain.player import Player
 
+
 def test_is_simulation_over_bankrupt():
     casino = Casino(bankroll=10000)
     casino.is_bankrupt = True
@@ -10,6 +11,7 @@ def test_is_simulation_over_bankrupt():
     assert is_over
     assert "bankrupt" in reason.lower()
 
+
 def test_is_simulation_over_no_money():
     casino = Casino(bankroll=0)
 
@@ -17,10 +19,11 @@ def test_is_simulation_over_no_money():
     assert is_over
     assert "money" in reason.lower()
 
+
 def test_is_simulation_over_all_dead():
     casino = Casino(bankroll=10000)
-    player1 = Player('John', 100)
-    player2 = Player('Jane', 200)
+    player1 = Player("John", 100)
+    player2 = Player("Jane", 200)
     player1.die()
     player2.die()
     casino.register_player(player1)
@@ -30,10 +33,11 @@ def test_is_simulation_over_all_dead():
     assert is_over
     assert "dead" in reason.lower()
 
+
 def test_is_simulation_over_all_broke():
     casino = Casino(bankroll=10000)
-    player1 = Player('John', 0)
-    player2 = Player('Jane', 0)
+    player1 = Player("John", 0)
+    player2 = Player("Jane", 0)
     casino.register_player(player1)
     casino.register_player(player2)
 
@@ -41,25 +45,29 @@ def test_is_simulation_over_all_broke():
     assert is_over
     assert "broke" in reason.lower()
 
+
 def test_is_simulation_not_over():
     casino = Casino(bankroll=10000)
-    player = Player('John', 100)
+    player = Player("John", 100)
     casino.register_player(player)
 
     is_over, reason = _is_simulation_over(casino)
     assert not is_over
     assert reason == ""
 
+
 def test_run_simulation():
     run_simulation(steps=5, seed=42)
 
+
 def test_run_simulation_ends_early_bankrupt():
     casino = Casino(bankroll=10)
-    player = Player('John', 0)
+    player = Player("John", 0)
     casino.register_player(player)
 
     is_over, reason = _is_simulation_over(casino)
     assert is_over
+
 
 def test_run_simulation_long():
     run_simulation(steps=100, seed=123)

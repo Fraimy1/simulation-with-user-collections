@@ -2,8 +2,14 @@ from __future__ import annotations
 from typing import Iterator
 from loguru import logger
 from casino_lab4.utils.logging import log_and_raise
-from casino_lab4.core.errors import NotFoundError, OutOfRangeError, WrongTypeError, StepZeroError
+from casino_lab4.core.errors import (
+    NotFoundError,
+    OutOfRangeError,
+    WrongTypeError,
+    StepZeroError,
+)
 from casino_lab4.domain.player import Player
+
 
 class PlayerCollection:
     def __init__(self, data: list[Player] | None = None) -> None:
@@ -23,8 +29,8 @@ class PlayerCollection:
 
         logger.debug(f"Player number {i} changed: {player}")
 
-    def __getitem__(self, i: int|slice) -> Player|PlayerCollection:
-        if not isinstance(i, (int,slice)):
+    def __getitem__(self, i: int | slice) -> Player | PlayerCollection:
+        if not isinstance(i, (int, slice)):
             log_and_raise(WrongTypeError("Index must be an integer or a slice"))
 
         if isinstance(i, slice):

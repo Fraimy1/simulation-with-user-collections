@@ -2,8 +2,15 @@ from __future__ import annotations
 from typing import Iterator
 from loguru import logger
 from casino_lab4.utils.logging import log_and_raise
-from casino_lab4.core.errors import NotFoundError, OutOfRangeError, WrongTypeError, StepZeroError
+from casino_lab4.core.errors import (
+    NotFoundError,
+    OutOfRangeError,
+    WrongTypeError,
+    StepZeroError,
+)
 from casino_lab4.domain.goose import Goose
+
+
 class GooseCollection:
     def __init__(self, data: list[Goose] | None = None) -> None:
         self._data: list[Goose] = data.copy() if data is not None else []
@@ -22,8 +29,8 @@ class GooseCollection:
 
         logger.debug(f"Goose number {i} changed: {goose}")
 
-    def __getitem__(self, i: int|slice) -> Goose|GooseCollection:
-        if not isinstance(i, (int,slice)):
+    def __getitem__(self, i: int | slice) -> Goose | GooseCollection:
+        if not isinstance(i, (int, slice)):
             log_and_raise(WrongTypeError("Index must be an integer or a slice"))
 
         if isinstance(i, slice):

@@ -47,10 +47,7 @@ def _roulette_roll() -> str:
 def _roulette_user_choice() -> str:
     allowed = set(settings.roulette_outcomes)
     outcomes = [o for o in settings.roulette_user_choice_outcomes if o in allowed]
-    weights = [
-        settings.roulette_user_choice_probabilities[o]
-        for o in outcomes
-    ]
+    weights = [settings.roulette_user_choice_probabilities[o] for o in outcomes]
     return rnd.choices(outcomes, weights=weights, k=1)[0]
 
 
@@ -78,7 +75,9 @@ def event_roulette(casino: Casino) -> None:
         _sync_balance(casino, player)
 
         if roll != user_choice:
-            logger.info(f"Roulette: {player.name} bet={bet} on {user_choice}, roll={roll} -> LOSE")
+            logger.info(
+                f"Roulette: {player.name} bet={bet} on {user_choice}, roll={roll} -> LOSE"
+            )
             continue
 
         mult = settings.roulette_payout_total.get(user_choice)
@@ -89,7 +88,10 @@ def event_roulette(casino: Casino) -> None:
         total_return = bet * int(mult)
 
         if casino.bankroll < total_return:
-            _mark_bankrupt(casino, f"roulette can't pay {player.name} total_return={total_return}, bankroll={casino.bankroll:.2f}")
+            _mark_bankrupt(
+                casino,
+                f"roulette can't pay {player.name} total_return={total_return}, bankroll={casino.bankroll:.2f}",
+            )
             return
 
         player.balance += total_return
@@ -97,7 +99,9 @@ def event_roulette(casino: Casino) -> None:
         _sync_balance(casino, player)
 
         profit = total_return - bet
-        logger.info(f"Roulette: {player.name} bet={bet} on {user_choice}, roll={roll} -> WIN profit={profit}")
+        logger.info(
+            f"Roulette: {player.name} bet={bet} on {user_choice}, roll={roll} -> WIN profit={profit}"
+        )
 
 
 def _slots_spin_outcome() -> str:
@@ -123,7 +127,10 @@ def _slots_pull(casino: Casino, player: Player, bet: int) -> str:
 
     if total_return > 0:
         if casino.bankroll < total_return:
-            _mark_bankrupt(casino, f"slots can't pay {player.name} total_return={total_return}, bankroll={casino.bankroll:.2f}")
+            _mark_bankrupt(
+                casino,
+                f"slots can't pay {player.name} total_return={total_return}, bankroll={casino.bankroll:.2f}",
+            )
             return outcome
 
         player.balance += total_return
@@ -162,7 +169,9 @@ def event_slots(casino: Casino) -> None:
             if outcome != "MISS":
                 wins += 1
 
-        logger.info(f"Slots: {player.name} pulls={pulls}, wins={wins} -> balance={player.balance:.2f}, sanity={player.sanity}")
+        logger.info(
+            f"Slots: {player.name} pulls={pulls}, wins={wins} -> balance={player.balance:.2f}, sanity={player.sanity}"
+        )
 
 
 def event_honk_scream(casino: Casino) -> None:
@@ -196,7 +205,9 @@ def event_honk_scream(casino: Casino) -> None:
     if total_stolen > 0:
         _sync_goose_balance(casino, goose)
 
-    logger.info(f"Honk: {goose.name} screamed -> sanity -{debuff} to {len(victims)} player(s), stole ${total_stolen:.2f} -> goose balance={goose.balance:.2f}")
+    logger.info(
+        f"Honk: {goose.name} screamed -> sanity -{debuff} to {len(victims)} player(s), stole ${total_stolen:.2f} -> goose balance={goose.balance:.2f}"
+    )
 
 
 def event_wargoose_attack(casino: Casino) -> None:
@@ -204,7 +215,9 @@ def event_wargoose_attack(casino: Casino) -> None:
         return
 
     geese = [g for g in casino.geese if isinstance(g, WarGoose)]
-    players = _alive_players(casino)  # All alive players can be attacked, regardless of balance
+    players = _alive_players(
+        casino
+    )  # All alive players can be attacked, regardless of balance
 
     if not geese or not players:
         logger.info("Attack: no WarGoose or no players")
@@ -212,7 +225,9 @@ def event_wargoose_attack(casino: Casino) -> None:
 
     goose = rnd.choice(geese)
 
-    k = rnd.randint(settings.wargoose_attack_victims_min, settings.wargoose_attack_victims_max)
+    k = rnd.randint(
+        settings.wargoose_attack_victims_min, settings.wargoose_attack_victims_max
+    )
     k = max(1, min(len(players), int(k)))
     victims = rnd.sample(players, k=k)
 
@@ -232,7 +247,9 @@ def event_wargoose_attack(casino: Casino) -> None:
     if total > 0:
         _sync_goose_balance(casino, goose)
 
-    logger.info(f"Attack: {goose.name} stole ~{pct:.0%} from {len(victims)} player(s), total={total:.2f} -> goose balance={goose.balance:.2f}")
+    logger.info(
+        f"Attack: {goose.name} stole ~{pct:.0%} from {len(victims)} player(s), total={total:.2f} -> goose balance={goose.balance:.2f}"
+    )
 
 
 def event_sanity_break(casino: Casino) -> None:
@@ -248,7 +265,9 @@ def event_sanity_break(casino: Casino) -> None:
             p.rest()
             rested += 1
 
-    logger.info(f"Sanity: {len(broken)} at 0 sanity, {rested} rested -> sanity={settings.sanity_max}")
+    logger.info(
+        f"Sanity: {len(broken)} at 0 sanity, {rested} rested -> sanity={settings.sanity_max}"
+    )
 
 
 def event_russian_roulette(casino: Casino) -> None:
@@ -269,13 +288,18 @@ def event_russian_roulette(casino: Casino) -> None:
 
     prize = 5000
     if casino.bankroll < prize:
-        _mark_bankrupt(casino, f"can't pay russian roulette prize={prize}, bankroll={casino.bankroll:.2f}")
+        _mark_bankrupt(
+            casino,
+            f"can't pay russian roulette prize={prize}, bankroll={casino.bankroll:.2f}",
+        )
         return
 
     winner.balance += prize
     casino.bankroll -= prize
     _sync_balance(casino, winner)
-    logger.info(f"Russian Roulette: {winner.name} won prize={prize} -> balance={winner.balance:.2f}")
+    logger.info(
+        f"Russian Roulette: {winner.name} won prize={prize} -> balance={winner.balance:.2f}"
+    )
 
 
 def event_bankrupt(casino: Casino) -> None:

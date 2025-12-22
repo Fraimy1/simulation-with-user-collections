@@ -72,13 +72,17 @@ def run_simulation(steps: int = 100, seed: int | None = None) -> None:
             break
 
         alive = sum(1 for p in casino.players if getattr(p, "alive", True))
-        logger.info(f"Casino bankroll: ${casino.bankroll:,.2f} | Players alive: {alive}/{len(casino.players)}")
+        logger.info(
+            f"Casino bankroll: ${casino.bankroll:,.2f} | Players alive: {alive}/{len(casino.players)}"
+        )
 
     logger.info("\n" + "=" * 80)
     logger.info("SIMULATION COMPLETE")
     logger.info("=" * 80)
 
     final_snapshot = take_snapshot(casino)
-    player_stats, goose_stats, casino_stats = compute_stats(initial_snapshot, final_snapshot)
+    player_stats, goose_stats, casino_stats = compute_stats(
+        initial_snapshot, final_snapshot
+    )
 
     print_statistics(player_stats, goose_stats, casino_stats)

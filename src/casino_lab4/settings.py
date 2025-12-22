@@ -89,11 +89,18 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def _validate(self) -> "Settings":
-        if self.roulette_green_slots + self.roulette_red_slots + self.roulette_black_slots != self.roulette_total_slots:
+        if (
+            self.roulette_green_slots
+            + self.roulette_red_slots
+            + self.roulette_black_slots
+            != self.roulette_total_slots
+        ):
             raise ValueError("Roulette slots must sum to roulette_total_slots")
 
         if self.roulette_green_slots not in (1, 2):
-            raise ValueError("roulette_green_slots must be 1 (european) or 2 (american)")
+            raise ValueError(
+                "roulette_green_slots must be 1 (european) or 2 (american)"
+            )
 
         if any(p < 0 for p in self.roulette_user_choice_probabilities.values()):
             raise ValueError("roulette_user_choice_probabilities must be non-negative")
