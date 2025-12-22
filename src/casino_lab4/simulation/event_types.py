@@ -5,6 +5,7 @@ from typing import Callable, Protocol, TypeAlias
 
 from casino_lab4.simulation.casino import Casino
 
+
 class EventHandler(Protocol):
     def __call__(self, casino: Casino) -> None: ...
 

@@ -1,6 +1,7 @@
 from casino_lab4.simulation.setup import create_default_casino
 from casino_lab4.domain.goose import WarGoose, HonkGoose
 
+
 def test_create_default_casino():
     casino = create_default_casino()
 

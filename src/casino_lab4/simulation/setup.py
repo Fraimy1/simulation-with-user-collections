@@ -11,12 +11,20 @@ from casino_lab4.domain.goose import WarGoose, HonkGoose
 def create_default_casino() -> Casino:
     casino = Casino(bankroll=100000.0)
 
-    player_names = ["Jane", "Dante", "Vergil", "V", "Charlie", "Samir", "John", "Daniel"]
+    player_names = [
+        "Jane",
+        "Dante",
+        "Vergil",
+        "V",
+        "Charlie",
+        "Samir",
+        "John",
+        "Daniel",
+    ]
     for name in player_names:
-        balance = float(rnd.randint(
-            settings.player_start_cash_min,
-            settings.player_start_cash_max
-        ))
+        balance = float(
+            rnd.randint(settings.player_start_cash_min, settings.player_start_cash_max)
+        )
         sanity = settings.sanity_max
         player = Player(name=name, balance=balance, sanity=sanity)
         casino.register_player(player)
