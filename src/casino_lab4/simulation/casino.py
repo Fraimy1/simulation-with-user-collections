@@ -15,7 +15,7 @@ class Casino:
         self.geese_balances = Balance(user_naming="Goose")
         self.bankroll: float = bankroll
         self.is_bankrupt: bool = False
-    
+
     def register_player(self, player:Player):
         self.players.append(player)
         self.balances[player.name] = player.balance
@@ -35,5 +35,5 @@ class Casino:
         self.geese.remove(goose)
         del self.geese_balances[goose.name]
         logger.info(f"Goose {goose.name} unregistered")
-    
-    
+
+

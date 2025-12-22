@@ -185,14 +185,14 @@ def event_honk_scream(casino: Casino) -> None:
     total_stolen = 0.0
     for p in victims:
         p.apply_sanity(p.sanity - debuff)
-        
+
         if p.balance > 0:
             fee = min(p.balance * 0.05, 50.0)
             p.balance -= fee
             goose.balance += fee
             total_stolen += fee
             _sync_balance(casino, p)
-    
+
     if total_stolen > 0:
         _sync_goose_balance(casino, goose)
 
@@ -228,7 +228,7 @@ def event_wargoose_attack(casino: Casino) -> None:
         goose.balance += stolen  # Money goes to the goose, not casino!
         total += stolen
         _sync_balance(casino, v)
-    
+
     if total > 0:
         _sync_goose_balance(casino, goose)
 

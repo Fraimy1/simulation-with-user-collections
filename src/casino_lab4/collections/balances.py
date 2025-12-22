@@ -7,7 +7,7 @@ class Balance:
     def __init__(self, user_naming: str = "Player") -> None:
         self._balances: dict[str : float] = {}
         self.label: str = user_naming
-    
+
     def __len__(self) -> int:
         return len(self._balances)
 
@@ -20,9 +20,9 @@ class Balance:
         balance = self._balances.get(name)
         if balance is None:
             log_and_raise(NotFoundError(f"Balance for {self.label} '{name}' not found"))
-        
+
         return balance
-    
+
     def __iter__(self) -> Iterator[str]:
         return iter(self._balances)
 
@@ -30,7 +30,7 @@ class Balance:
         balance = self._balances.pop(name, None)
         if balance is None:
             log_and_raise(NotFoundError(f"Balance for {self.label} '{name}' not found"))
-        
+
         logger.info(f"{self.label} balance deleted: '{name}'")
 
     def remove(self, name: str) -> None:

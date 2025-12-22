@@ -9,4 +9,3 @@ def test_how_many_pulls():
     max_pulls = int(player.balance / settings.slot_spin_cost)
     assert pulls >= 1
     assert pulls <= max_pulls
-

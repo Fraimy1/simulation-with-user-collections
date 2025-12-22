@@ -16,7 +16,7 @@ def test_goose():
     assert new_goose.name == 'John + Dan'
     assert new_goose.honk_volume == 5
     assert new_goose.balance == 0.0
-    
+
     with pytest.raises(TypeError):
         goose_1 + 7
 

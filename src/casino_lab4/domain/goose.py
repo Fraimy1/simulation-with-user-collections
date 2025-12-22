@@ -10,16 +10,16 @@ class Goose:
         self.name = name
         self.honk_volume = honk_volume
         self.balance = balance
-    
+
     def __add__(self, other: Self) -> Self:
         if type(other) is not type(self):
             return NotImplemented
-        
+
         if len(self.name) + len(other.name) < 50:
             name = f"{self.name} + {other.name}"
         else:
             name = f"{self.name[:50]} + ..."
-        
+
         cls = type(self)
 
         return cls(name, self.honk_volume + other.honk_volume, self.balance + other.balance)
@@ -38,12 +38,12 @@ class WarGoose(Goose):
     def __add__(self, other: WarGoose) -> WarGoose:
         if not isinstance(other, WarGoose):
             return NotImplemented
-        
+
         if len(self.name) + len(other.name) < 50:
             name = f"{self.name} + {other.name}"
         else:
             name = f"{self.name[:50]} + ..."
-        
+
         return WarGoose(name, self.honk_volume + other.honk_volume, self.damage + other.damage, self.balance + other.balance)
 
     def __repr__(self) -> str:

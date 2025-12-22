@@ -8,13 +8,13 @@ def test_balance():
     assert balance['John'] == 100
 
     assert len(balance) == 1
-    
+
     assert 'John' in balance
     assert 'Jane' not in balance
-    
+
     with pytest.raises(NotFoundError):
         balance['Jane']
-    
+
     balance['John'] = 200
     assert balance['John'] == 200
 
