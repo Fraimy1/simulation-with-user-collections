@@ -1,4 +1,3 @@
-import pytest
 from casino_lab4.simulation.randomization import how_many_pulls
 from casino_lab4.domain.player import Player
 from casino_lab4.settings import settings

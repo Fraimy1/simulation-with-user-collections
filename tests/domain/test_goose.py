@@ -1,6 +1,5 @@
 import pytest
 from casino_lab4.domain.goose import Goose, WarGoose, HonkGoose
-from casino_lab4.domain.player import Player
 
 def test_goose():
     goose_1 = Goose('John', 2)

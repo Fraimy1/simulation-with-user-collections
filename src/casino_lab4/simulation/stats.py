@@ -3,8 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from casino_lab4.simulation.casino import Casino
-from casino_lab4.domain.player import Player
-from casino_lab4.domain.goose import Goose
 
 
 @dataclass
@@ -122,7 +120,7 @@ def print_statistics(player_stats: list[PlayerStats], goose_stats: list[GooseSta
     logger.info("SIMULATION STATISTICS")
     logger.info("=" * 80)
 
-    logger.info(f"\nCASINO:")
+    logger.info("\nCASINO:")
     logger.info(f"  Initial Bankroll: ${casino_stats.initial_bankroll:,.2f}")
     logger.info(f"  Final Bankroll:   ${casino_stats.final_bankroll:,.2f}")
     logger.info(f"  Change:           ${casino_stats.bankroll_change:+,.2f}")
@@ -145,7 +143,7 @@ def print_statistics(player_stats: list[PlayerStats], goose_stats: list[GooseSta
     alive_players = sum(1 for ps in player_stats if ps.alive)
     dead_players = len(player_stats) - alive_players
 
-    logger.info(f"\nSUMMARY:")
+    logger.info("\nSUMMARY:")
     logger.info(f"  Total Player Wealth Change: ${total_player_change:+,.2f}")
     logger.info(f"  Players Alive: {alive_players}/{len(player_stats)}")
     logger.info(f"  Players Dead:  {dead_players}/{len(player_stats)}")

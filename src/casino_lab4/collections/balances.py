@@ -5,7 +5,7 @@ from casino_lab4.core.errors import NotFoundError
 
 class Balance:
     def __init__(self, user_naming: str = "Player") -> None:
-        self._balances: dict[str : float] = {}
+        self._balances: dict[str, float] = {}
         self.label: str = user_naming
 
     def __len__(self) -> int:
@@ -20,7 +20,6 @@ class Balance:
         balance = self._balances.get(name)
         if balance is None:
             log_and_raise(NotFoundError(f"Balance for {self.label} '{name}' not found"))
-
         return balance
 
     def __iter__(self) -> Iterator[str]:

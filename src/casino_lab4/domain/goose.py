@@ -1,5 +1,4 @@
 from __future__ import annotations
-from casino_lab4.domain.player import Player
 from loguru import logger
 from typing import Self
 import random as rnd

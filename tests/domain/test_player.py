@@ -1,4 +1,3 @@
-import pytest
 from casino_lab4.domain.player import Player
 
 def test_player_init():
@@ -6,7 +5,7 @@ def test_player_init():
     assert player.name == 'John'
     assert player.balance == 100
     assert player.sanity == 100
-    assert player.alive == True
+    assert player.alive
 
 def test_player_init_with_sanity():
     player = Player('Jane', 200, sanity=50)
@@ -50,17 +49,17 @@ def test_player_rest():
 
 def test_player_can_act():
     player = Player('John', 100, sanity=50)
-    assert player.can_act() == True
+    assert player.can_act()
 
     player.apply_sanity(0)
-    assert player.can_act() == False
+    assert not player.can_act()
 
     player.rest()
     player.die()
-    assert player.can_act() == False
+    assert not player.can_act()
 
 def test_player_die():
     player = Player('John', 100, sanity=50)
     player.die()
-    assert player.alive == False
+    assert not player.alive
     assert player.sanity == 100

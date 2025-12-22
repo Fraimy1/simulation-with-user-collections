@@ -1,4 +1,3 @@
-import pytest
 from casino_lab4.simulation.selectors import select_players
 from casino_lab4.simulation.casino import Casino
 from casino_lab4.domain.player import Player

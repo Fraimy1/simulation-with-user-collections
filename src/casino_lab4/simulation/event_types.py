@@ -9,7 +9,7 @@ class EventHandler(Protocol):
     def __call__(self, casino: Casino) -> None: ...
 
 
-EventCondition: TypeAlias = Callable[Casino, bool]
+EventCondition: TypeAlias = Callable[[Casino], bool]
 
 
 def _always(_: Casino) -> bool:

@@ -1,9 +1,8 @@
-import pytest
 from casino_lab4.simulation.events import (
     event_roulette, event_slots, event_honk_scream, event_wargoose_attack,
     event_sanity_break, event_russian_roulette, event_bankrupt,
     pick_event, available_events, call_mandatory_events,
-    RANDOM_EVENTS, MANDATORY_EVENTS
+    RANDOM_EVENTS
 )
 from casino_lab4.simulation.casino import Casino
 from casino_lab4.domain.player import Player
@@ -110,12 +109,12 @@ def test_event_russian_roulette_not_enough_broke():
     casino.register_player(player)
 
     event_russian_roulette(casino)
-    assert player.alive == True
+    assert player.alive
 
 def test_event_bankrupt():
     casino = Casino(bankroll=10000)
     event_bankrupt(casino)
-    assert casino.is_bankrupt == True
+    assert casino.is_bankrupt
 
 def test_pick_event():
     casino = Casino(bankroll=10000)
@@ -154,12 +153,12 @@ def test_call_mandatory_events_bankrupt():
     casino = Casino(bankroll=10000)
     casino.is_bankrupt = True
     call_mandatory_events(casino)
-    assert casino.is_bankrupt == True
+    assert casino.is_bankrupt
 
 def test_call_mandatory_events_no_bankroll():
     casino = Casino(bankroll=0)
     call_mandatory_events(casino)
-    assert casino.is_bankrupt == True
+    assert casino.is_bankrupt
 
 def test_event_roulette_casino_cant_pay():
     casino = Casino(bankroll=10)

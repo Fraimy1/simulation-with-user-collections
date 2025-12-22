@@ -35,5 +35,3 @@ class Casino:
         self.geese.remove(goose)
         del self.geese_balances[goose.name]
         logger.info(f"Goose {goose.name} unregistered")
-
-

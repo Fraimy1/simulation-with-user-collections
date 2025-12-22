@@ -28,7 +28,4 @@ class Player:
 
     def die(self) -> None:
         self.alive = False
-        self.sanity: float = 100
-
-    def __repr__(self) -> str:
-        return f"Player(name={self.name}, balance={self.balance}, sanity={self.sanity}, alive={self.alive})"
+        self.sanity = 100

@@ -1,4 +1,3 @@
-import pytest
 from casino_lab4.simulation.setup import create_default_casino
 from casino_lab4.domain.goose import WarGoose, HonkGoose
 

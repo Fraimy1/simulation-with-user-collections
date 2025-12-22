@@ -1,6 +1,5 @@
 from __future__ import annotations
 from casino_lab4.simulation.casino import Casino
-from casino_lab4.collections.players import Player
 import random as rnd
 from casino_lab4.collections.players import PlayerCollection
 

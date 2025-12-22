@@ -5,7 +5,7 @@ import random as rnd
 from casino_lab4.settings import settings
 from casino_lab4.simulation.casino import Casino
 from casino_lab4.domain.player import Player
-from casino_lab4.domain.goose import Goose, WarGoose, HonkGoose
+from casino_lab4.domain.goose import WarGoose, HonkGoose
 
 
 def create_default_casino() -> Casino:
@@ -31,7 +31,7 @@ def create_default_casino() -> Casino:
     honk_goose_names = ["Goose4", "Goose5"]
     for name in honk_goose_names:
         honk_volume = rnd.uniform(8, 20)
-        goose = HonkGoose(name=name, honk_volume=honk_volume, balance=0.0)
-        casino.register_goose(goose)
+        honk_goose = HonkGoose(name=name, honk_volume=honk_volume, balance=0.0)
+        casino.register_goose(honk_goose)
 
     return casino

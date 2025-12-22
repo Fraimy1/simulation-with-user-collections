@@ -1,14 +1,13 @@
-import pytest
 from casino_lab4.simulation.casino import Casino
 from casino_lab4.domain.player import Player
-from casino_lab4.domain.goose import Goose, WarGoose, HonkGoose
+from casino_lab4.domain.goose import Goose
 
 def test_casino_init():
     casino = Casino(bankroll=10000)
     assert casino.bankroll == 10000
     assert len(casino.players) == 0
     assert len(casino.geese) == 0
-    assert casino.is_bankrupt == False
+    assert not casino.is_bankrupt
 
 def test_casino_register_player():
     casino = Casino(bankroll=10000)
