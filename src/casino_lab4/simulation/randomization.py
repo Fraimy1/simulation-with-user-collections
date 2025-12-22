@@ -1,5 +1,5 @@
 from __future__ import annotations
-from casino_lab4 import settings
+from casino_lab4.settings import settings
 from casino_lab4.domain.player import Player
 import random as rnd
 

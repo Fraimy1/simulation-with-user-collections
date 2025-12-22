@@ -88,5 +88,6 @@ def test_errors_remove(geese):
     with pytest.raises(NotFoundError):
         geese.remove(Goose("azazaza", 200))
 
-# def test_repr(geese):
-#     assert geese.__repr__() == "GooseCollection([Goose(name=Gus, honk_volume=100), Goose(name=Lily, honk_volume=200), Goose(name=Daisy, honk_volume=300)])"
+def test_repr(geese):
+    result = repr(geese)
+    assert "GooseCollection" in result
