@@ -36,6 +36,23 @@ def _mark_bankrupt(casino: Casino, reason: str) -> None:
     logger.info(f"Bankrupt: {reason} -> game over")
 
 
+def _charge_to_casino(casino: Casino, player: Player, amount: float) -> None:
+    player.balance -= amount
+    casino.bankroll += amount
+    _sync_balance(casino, player)
+
+
+def _try_payout_from_casino(casino: Casino, player: Player, amount: float, reason: str) -> bool:
+    if casino.bankroll < amount:
+        _mark_bankrupt(casino, reason)
+        return False
+
+    player.balance += amount
+    casino.bankroll -= amount
+    _sync_balance(casino, player)
+    return True
+
+
 def _roulette_roll() -> str:
     return rnd.choices(
         population=settings.roulette_outcomes,
@@ -70,9 +87,7 @@ def event_roulette(casino: Casino) -> None:
         user_choice = _roulette_user_choice()
         roll = _roulette_roll()
 
-        player.balance -= bet
-        casino.bankroll += bet
-        _sync_balance(casino, player)
+        _charge_to_casino(casino, player, float(bet))
 
         if roll != user_choice:
             logger.info(
@@ -85,22 +100,20 @@ def event_roulette(casino: Casino) -> None:
             logger.info(f"Roulette: missing payout multiplier for {user_choice}")
             continue
 
-        total_return = bet * int(mult)
+        total_return = float(bet) * float(mult)
 
-        if casino.bankroll < total_return:
-            _mark_bankrupt(
-                casino,
-                f"roulette can't pay {player.name} total_return={total_return}, bankroll={casino.bankroll:.2f}",
-            )
+        ok = _try_payout_from_casino(
+            casino,
+            player,
+            total_return,
+            reason=f"roulette can't pay {player.name} total_return={total_return:.2f}, bankroll={casino.bankroll:.2f}",
+        )
+        if not ok:
             return
 
-        player.balance += total_return
-        casino.bankroll -= total_return
-        _sync_balance(casino, player)
-
-        profit = total_return - bet
+        profit = total_return - float(bet)
         logger.info(
-            f"Roulette: {player.name} bet={bet} on {user_choice}, roll={roll} -> WIN profit={profit}"
+            f"Roulette: {player.name} bet={bet} on {user_choice}, roll={roll} -> WIN profit={profit:.2f}"
         )
 
 
@@ -113,29 +126,25 @@ def _slots_spin_outcome() -> str:
 
 
 def _slots_pull(casino: Casino, player: Player, bet: int) -> str:
-    player.balance -= bet
-    casino.bankroll += bet
-    _sync_balance(casino, player)
+    _charge_to_casino(casino, player, float(bet))
 
     outcome = _slots_spin_outcome()
 
     sanity_delta = int(settings.slot_sanity_delta.get(outcome, 0))
     player.apply_sanity(player.sanity + sanity_delta)
 
-    mult = int(settings.slot_payout_total.get(outcome, 0))
-    total_return = bet * mult
+    mult = float(settings.slot_payout_total.get(outcome, 0))
+    total_return = float(bet) * mult
 
     if total_return > 0:
-        if casino.bankroll < total_return:
-            _mark_bankrupt(
-                casino,
-                f"slots can't pay {player.name} total_return={total_return}, bankroll={casino.bankroll:.2f}",
-            )
+        ok = _try_payout_from_casino(
+            casino,
+            player,
+            total_return,
+            reason=f"slots can't pay {player.name} total_return={total_return:.2f}, bankroll={casino.bankroll:.2f}",
+        )
+        if not ok:
             return outcome
-
-        player.balance += total_return
-        casino.bankroll -= total_return
-        _sync_balance(casino, player)
 
     return outcome
 
@@ -149,7 +158,7 @@ def event_slots(casino: Casino) -> None:
         logger.info("Slots: invalid spin cost")
         return
 
-    eligible = [p for p in _alive_players(casino) if p.can_act() and p.balance > 0]
+    eligible = [p for p in _alive_players(casino) if p.can_act() and p.balance >= bet]
     if not eligible:
         logger.info("Slots: no eligible players")
         return
@@ -286,19 +295,18 @@ def event_russian_roulette(casino: Casino) -> None:
     loser.die()
     logger.info(f"Russian Roulette: {p1.name} vs {p2.name} -> {loser.name} died")
 
-    prize = 5000
-    if casino.bankroll < prize:
-        _mark_bankrupt(
-            casino,
-            f"can't pay russian roulette prize={prize}, bankroll={casino.bankroll:.2f}",
-        )
+    prize = 5000.0
+    ok = _try_payout_from_casino(
+        casino,
+        winner,
+        prize,
+        reason=f"can't pay russian roulette prize={prize:.0f}, bankroll={casino.bankroll:.2f}",
+    )
+    if not ok:
         return
 
-    winner.balance += prize
-    casino.bankroll -= prize
-    _sync_balance(casino, winner)
     logger.info(
-        f"Russian Roulette: {winner.name} won prize={prize} -> balance={winner.balance:.2f}"
+        f"Russian Roulette: {winner.name} won prize={prize:.0f} -> balance={winner.balance:.2f}"
     )
 
 
