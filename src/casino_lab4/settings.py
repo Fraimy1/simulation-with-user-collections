@@ -36,6 +36,9 @@ class Settings(BaseSettings):
 
     russian_roulette_prize: float = 5000.0
 
+    simulation_steps: int = 100
+    simulation_seed: int = 42
+
     wargoose_attack_victims_min: int = 1
     wargoose_attack_victims_max: int = 3
     wargoose_steal_pct_min: float = 0.30
