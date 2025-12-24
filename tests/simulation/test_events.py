@@ -47,9 +47,12 @@ def test_event_slots():
     player = Player("John", 1000)
     casino.register_player(player)
 
+    initial_balance = player.balance
+    initial_bankroll = casino.bankroll
+
     event_slots(casino)
 
-    assert casino.bankroll != 10000 or player.balance != 1000
+    assert player.balance != initial_balance or casino.bankroll != initial_bankroll
 
 
 def test_event_slots_no_players():
