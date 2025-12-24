@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import random as rnd
 
+from casino_lab4.settings import settings
 from casino_lab4.utils.logging import logger
 from casino_lab4.simulation.setup import create_default_casino
 from casino_lab4.simulation.events import pick_event, call_mandatory_events
@@ -26,7 +27,11 @@ def _is_simulation_over(casino) -> tuple[bool, str]:
     return False, ""
 
 
-def run_simulation(steps: int = 100, seed: int | None = None) -> None:
+def run_simulation(steps: int | None = None, seed: int | None = None) -> None:
+    if steps is None:
+        steps = settings.simulation_steps
+    if seed is None:
+        seed = settings.simulation_seed
     if seed is not None:
         rnd.seed(seed)
         logger.info(f"Random seed set to: {seed}")
