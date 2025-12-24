@@ -38,6 +38,7 @@ class Settings(BaseSettings):
 
     simulation_steps: int = 100
     simulation_seed: int = 42
+    use_seed: bool = True
 
     wargoose_attack_victims_min: int = 1
     wargoose_attack_victims_max: int = 3

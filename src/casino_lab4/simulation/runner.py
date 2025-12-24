@@ -32,7 +32,7 @@ def run_simulation(steps: int | None = None, seed: int | None = None) -> None:
         steps = settings.simulation_steps
     if seed is None:
         seed = settings.simulation_seed
-    if seed is not None:
+    if settings.use_seed and seed is not None:
         rnd.seed(seed)
         logger.info(f"Random seed set to: {seed}")
 
