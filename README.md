@@ -2,6 +2,20 @@
 
 Консольная симуляция казино с игроками, гусями и денежными потоками. Проект сделан в формате Python-пакета (`src/` layout), с пользовательскими коллекциями и псевдослучайной моделью (seed).
 
+- [Казино и Гуси — Лаба 4](#казино-и-гуси--лаба-4)
+  - [Возможности](#возможности)
+    - [Предметная модель](#предметная-модель)
+    - [Пользовательские исключения](#пользовательские-исключения)
+    - [Пользовательские коллекции (требования лабы)](#пользовательские-коллекции-требования-лабы)
+    - [Симуляция](#симуляция)
+    - [Конфигурация (Pydantic Settings)](#конфигурация-pydantic-settings)
+  - [Примеры](#примеры)
+    - [Доступные настройки](#доступные-настройки)
+  - [Установка и запуск (uv)](#установка-и-запуск-uv)
+  - [Структура проекта](#структура-проекта)
+  - [Тесты](#тесты)
+  - [Код-стайл и типы](#код-стайл-и-типы)
+
 ## Возможности
 
 ### Предметная модель
@@ -54,6 +68,7 @@
 
 * Все ключевые константы лежат в `settings.py`
 * Поддержка переменных окружения с префиксом `CASINO_`
+* Поддержка `.env` файла (автоматически загружается pydantic-settings)
 
 ## Примеры
 
@@ -64,13 +79,48 @@ uv run python main.py
 
 > **Примечание:** Параметры `steps` и `seed` задаются в `main.py`
 
-Пример переменных окружения (PowerShell):
+**Конфигурация через `.env` файл**
 
-```powershell
-$env:CASINO_SLOT_SPIN_COST=20
-$env:CASINO_SANITY_SKIP_TURN_CHANCE=0.8
-uv run python main.py
+Создай файл `.env` в корне проекта:
+
+```bash
+# .env
+CASINO_SIMULATION_STEPS=200
+CASINO_SIMULATION_SEED=777
+CASINO_USE_SEED=true
+
+CASINO_SLOT_SPIN_COST=30
+CASINO_PLAYER_START_CASH_MIN=500
+CASINO_PLAYER_START_CASH_MAX=5000
+
+CASINO_HONK_FEAR_FEE_PCT=0.10
+CASINO_RUSSIAN_ROULETTE_PRIZE=10000
 ```
+
+
+### Доступные настройки
+
+
+
+| Переменная                           | Тип   | По умолчанию | Описание                                   |
+| ------------------------------------ | ----- | ------------ | ------------------------------------------ |
+| `CASINO_SIMULATION_STEPS`            | int   | 100          | Количество шагов симуляции                 |
+| `CASINO_SIMULATION_SEED`             | int   | 42           | Seed для рандома                           |
+| `CASINO_USE_SEED`                    | bool  | true         | Использовать ли seed                       |
+| `CASINO_SLOT_SPIN_COST`              | int   | 20           | Стоимость спина в слотах                   |
+| `CASINO_PLAYER_START_CASH_MIN`       | int   | 200          | Минимальный стартовый баланс игрока        |
+| `CASINO_PLAYER_START_CASH_MAX`       | int   | 2000         | Максимальный стартовый баланс игрока       |
+| `CASINO_HONK_SANITY_DEBUFF`          | int   | 10           | Дебафф sanity от крика HonkGoose           |
+| `CASINO_HONK_FEAR_FEE_PCT`           | float | 0.05         | Процент баланса, крадущийся HonkGoose (5%) |
+| `CASINO_HONK_FEAR_FEE_MAX`           | float | 50.0         | Максимальная сумма кражи HonkGoose         |
+| `CASINO_RUSSIAN_ROULETTE_PRIZE`      | float | 5000.0       | Выигрыш в Russian Roulette                 |
+| `CASINO_WARGOOSE_ATTACK_VICTIMS_MIN` | int   | 1            | Минимум жертв атаки WarGoose               |
+| `CASINO_WARGOOSE_ATTACK_VICTIMS_MAX` | int   | 3            | Максимум жертв атаки WarGoose              |
+| `CASINO_WARGOOSE_STEAL_PCT_MIN`      | float | 0.30         | Минимальный % кражи WarGoose               |
+| `CASINO_WARGOOSE_STEAL_PCT_MAX`      | float | 0.50         | Максимальный % кражи WarGoose              |
+
+> Все настройки имеют префикс `CASINO_` и **не** чувствительны к регистру.
+> Если что табличку (и table of contents) делал через extension `Markdown All in One`.
 
 ## Установка и запуск (uv)
 
