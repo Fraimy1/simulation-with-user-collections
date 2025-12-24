@@ -31,6 +31,10 @@ class Settings(BaseSettings):
     sanity_act_anyway_chance: float = 0.2
 
     honk_sanity_debuff: int = 10
+    honk_fear_fee_pct: float = 0.05
+    honk_fear_fee_max: float = 50.0
+
+    russian_roulette_prize: float = 5000.0
 
     wargoose_attack_victims_min: int = 1
     wargoose_attack_victims_max: int = 3

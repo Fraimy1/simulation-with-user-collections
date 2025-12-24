@@ -205,7 +205,7 @@ def event_honk_scream(casino: Casino) -> None:
         p.apply_sanity(p.sanity - debuff)
 
         if p.balance > 0:
-            fee = min(p.balance * 0.05, 50.0)
+            fee = min(p.balance * settings.honk_fear_fee_pct, settings.honk_fear_fee_max)
             p.balance -= fee
             goose.balance += fee
             total_stolen += fee
@@ -295,7 +295,7 @@ def event_russian_roulette(casino: Casino) -> None:
     loser.die()
     logger.info(f"Russian Roulette: {p1.name} vs {p2.name} -> {loser.name} died")
 
-    prize = 5000.0
+    prize = settings.russian_roulette_prize
     ok = _try_payout_from_casino(
         casino,
         winner,
